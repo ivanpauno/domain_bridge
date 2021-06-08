@@ -21,6 +21,8 @@
 #include "domain_bridge/domain_bridge.hpp"
 #include "domain_bridge/parse_domain_bridge_yaml_config.hpp"
 
+#include "example_interfaces/srv/add_two_ints.hpp"
+
 void help()
 {
   std::cerr << "Usage: domain_bridge "
@@ -95,6 +97,11 @@ int main(int argc, char ** argv)
   }
 
   domain_bridge::DomainBridge domain_bridge(domain_bridge_config);
+  domain_bridge::TopicBridge bridge_empty_srv;
+  bridge_empty_srv.topic_name = "/add_two_ints";
+  bridge_empty_srv.from_domain_id = 0;
+  bridge_empty_srv.to_domain_id = 2;
+  domain_bridge.bridge_service<example_interfaces::srv::AddTwoInts>(bridge_empty_srv);
 
   rclcpp::executors::SingleThreadedExecutor executor;
   domain_bridge.add_to_executor(executor);

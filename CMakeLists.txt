@@ -20,6 +20,7 @@ find_package(rclcpp REQUIRED)
 find_package(rcutils REQUIRED)
 # Leverage rosbag2's generic type support utilities
 find_package(rosbag2_cpp REQUIRED)
+find_package(example_interfaces REQUIRED)
 find_package(yaml_cpp_vendor REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
@@ -56,6 +57,10 @@ set_target_properties(${PROJECT_NAME}_exec PROPERTIES OUTPUT_NAME ${PROJECT_NAME
 
 target_link_libraries(${PROJECT_NAME}_exec
   ${PROJECT_NAME}
+)
+
+ament_target_dependencies(${PROJECT_NAME}_exec
+  example_interfaces
 )
 
 install(DIRECTORY include/
